@@ -1,0 +1,181 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<div class="container">
+<div class="custom_post_type_generator row">
+<div class="col-md-6">
+<div>
+<label>Function Name (Must be different)</label>
+<input type="text" placeholder="gallery_custom_post_type" id="function_name">
+</div>
+<div>
+<label>Post Type Name</label>
+<input type="text" placeholder="posttype_post" id="post_type">
+</div>
+<div>
+<label>Taxonomy Name</label>
+<input type="text" placeholder="taxonomy_type" id="taxonomy_name">
+</div>
+</div>
+<div class="col-md-6">
+<div>
+<label>Menu Name</label>
+<input type="text" placeholder="gallery" id="menu_name">
+</div>
+<div style="position:relative">
+<label>Icon</label>
+<input type="text" id="menu_icon" placeholder="dashicons-admin-site"><a href="https://developer.wordpress.org/resource/dashicons" target="_blank" style="position: absolute;bottom: 16px;right: 10px;">Help</a>
+</div>
+<div>
+<label>Menu Label</label>
+<input type="text" id="menu_label" placeholder="post">
+</div>
+</div>
+<div class="col-md-6">
+<br>
+<button id="generate" type="button" onclick="copyToClipboard('#myInput')" class="btn btn-warning">Generate</button>
+
+</div>
+
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+$(document).ready(function(){
+    $("#generate").click(function(){
+	$(".codeposttype").show();
+        var functionName =  $("#function_name").val();
+        var postType =  $("#post_type").val();
+        var taxonomyName =  $("#taxonomy_name").val();
+        var menuName =  $("#menu_name").val();
+        var menuIcon =  $("#menu_icon").val();
+        var menuLabel =  $("#menu_label").val();
+
+		$(".fn").text(functionName);
+		$(".ml").text(menuLabel);
+		$(".tn").text(taxonomyName);
+		$(".ptn").text(postType);
+		$(".mn").text(menuName);
+		$(".mI").text(menuIcon);
+		
+    });
+});
+</script>
+<div class="codeposttype container" id="myInput" style="display:none;margin: 30px auto;padding: 40px;">
+
+/*---------------------------<span class="ml"></span> POST TYPES  HERE--------------*/ <br>
+  add_action('init', '<span class="fn"></span>');<br>
+ function <span class="fn"></span>() {<br>
+ $labels = array(
+  'name'               => _x( '<span class="ml"></span>', 'post type general name' ),<br>
+  'singular_name'      => _x( '<span class="ml"></span>', 'post type singular name' ),<br>
+  'add_new'            => _x( 'Add New', 'post' ),<br>
+  'add_new_item'       => __( 'Add New <span class="ml"></span>' ),<br>
+  'edit_item'          => __( 'Edit <span class="ml"></span>' ),<br>
+  'new_item'           => __( 'New <span class="ml"></span>' ),<br>
+  'all_items'          => __( 'All <span class="ml"></span>' ),<br>
+  'view_item'          => __( 'View <span class="ml"></span>' ),<br>
+  'search_items'       => __( 'Search <span class="ml"></span>' ),<br>
+  'not_found'          => __( 'No <span class="ml"></span> found' ),<br>
+  'not_found_in_trash' => __( 'No <span class="ml"></span> found' ), <br>
+  'parent_item_colon'  => '',<br>
+  'menu_name'          => '<span class="mn"></span>'<br>
+ );<br><br>
+ $args = array(<br>
+  'labels'           => $labels,<br>
+  'description'      => '<span class="ml"></span> posts',<br>
+  'public'           => true,<br>
+  'show_ui'      => true, <br>
+  'show_in_menu'     => true, <br>
+  'publicly_queryable'   => true,<br>
+  'menu_position'    => 5,<br>
+  'query_var'     => true,<br>
+  'rewrite'     => true,<br>
+  'capability_type'    => 'post',<br>
+   'has_archive'    => true, 
+  'supports'         => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),<br>
+  'has_archive'      => true,<br>
+   'menu_icon'       => '<span class="mI"></span>',<br>
+ );<br><br>
+ register_post_type( '<span class="ptn"></span>', $args ); <br><br>
+
+ register_taxonomy("<span class="tn"></span>", '<span class="ptn"></span>', array("hierarchical" => true, "label" => "<span class="ml"></span> Category",'show_admin_column' => true, "singular_label" => "<span class="ml"></span>_page Category","rewrite" => true) );<br>
+}<br>
+
+</div>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+.custom_post_type_generator{
+	margin-top:20px
+}
+</style>
